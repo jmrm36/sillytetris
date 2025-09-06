@@ -80,7 +80,9 @@ function drawMatrix(matrix, offset){
       if(!v) return;
       ctx.fillStyle = v;
       ctx.fillRect((x+offset.x)*cell, (y+offset.y)*cell, cell-1, cell-1);
-      ctx.drawImage(ghostImg, (x+offset.x)*cell, (y+offset.y)*cell, cell, cell);
+      if (ghostImg.complete) {
+        ctx.drawImage(ghostImg, (x+offset.x)*cell, (y+offset.y)*cell, cell, cell);
+      }
     });
   });
 }
