@@ -1,55 +1,67 @@
-html,body{height:100%;margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-.wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
-#game{image-rendering:pixelated;border:1px solid #ccc;box-shadow:0 8px 24px rgba(0,0,0,.1);background:#111}
-
-.controls {
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  background: #ffffff;
-  box-shadow: 0 -6px 20px rgba(0,0,0,0.08);
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.ctrl {
-  display: inline-flex;
+body {
+  background: #121212;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+h1 {
+  margin: 20px 0;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+#game {
+  background: #1e1e1e;
+  border: 2px solid #333;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  border-radius: 12px;
+  margin: 10px 0 20px 0;
+  image-rendering: pixelated;
+}
+
+.controls {
+  display: flex;
   justify-content: center;
-  gap: 4px;
-  min-width: 72px;
-  min-height: 72px;
-  padding: 10px 12px;
-  font-size: clamp(18px, 3.5vw, 22px);
-  line-height: 1;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.controls .ctrl {
+  background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
   border: none;
   border-radius: 12px;
-  background: #111;
-  color: #ffd233;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: all 0.2s ease;
 }
 
-.ctrl:active { transform: scale(0.98); }
-
-.ctrl .label {
-  font-size: 12px;
-  line-height: 1;
-  letter-spacing: 0.2px;
+.controls .ctrl:hover {
+  background: linear-gradient(145deg, #3a3a3a, #222);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.5);
 }
 
-@media (max-width: 420px) {
-  .ctrl { min-width: 64px; min-height: 64px; }
-  .ctrl .label { font-size: 11px; }
+.controls .ctrl:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
-/* Give the play area breathing room so controls don't overlap it */
-.wrap, canvas, #gameRoot {
-  padding-bottom: 110px;
+.controls svg {
+  width: 28px;
+  height: 28px;
+  fill: #00ffc3;
 }
