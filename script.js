@@ -1,5 +1,6 @@
 import { Game } from './src/tetris.js';
 import { attachInput } from './src/input.js';
+import ghostSrc from './assets/ghost.svg';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -7,7 +8,7 @@ const game = new Game(10, 20);
 attachInput(game);
 
 const ghostImg = new Image();
-ghostImg.src = 'assets/ghost.svg';
+ghostImg.src = ghostSrc;
 
 // --- Overlay wiring ---
 let gameStarted = true;
@@ -82,7 +83,7 @@ function drawMatrix(matrix, offset){
       if(!v) return;
       ctx.fillStyle = v;
       ctx.fillRect((x+offset.x)*cell, (y+offset.y)*cell, cell-1, cell-1);
-      if (ghostImg.complete) {
+      if (ghostImg.complete && ghostImg.naturalWidth > 0) {
         ctx.drawImage(ghostImg, (x+offset.x)*cell, (y+offset.y)*cell, cell, cell);
       }
     });
