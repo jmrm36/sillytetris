@@ -1,0 +1,10 @@
+{
+  "name": "new-tetris",
+  "version": "1.0.0",
+  "description": "Simple Tetris web app",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"No tests specified\""
+  },
+  "license": "MIT"
+}
