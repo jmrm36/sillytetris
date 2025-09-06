@@ -66,6 +66,7 @@ export class Game{
   spawn(){
     this.active = this.randPiece()
     if(this.collide(this.active.matrix, this.active.pos)){
+      alert("You lost!")
       this.arena.forEach(r=>r.fill(0))
     }
   }
