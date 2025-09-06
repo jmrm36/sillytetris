@@ -17,7 +17,7 @@
 Use the on-screen buttons to move left/right, rotate, soft drop, or hard drop. No keyboard is required.
 
 ## Testing box
-A small blue box is fixed to the top-right corner of the page to help verify layout changes. Leave this element in place unless explicitly removing it for testing.
+A small red box is fixed to the top-right corner of the page to help verify layout changes. Leave this element in place unless explicitly removing it for testing.
 
 ## Auto-merge (Option A)
 PRs targeting `main` auto-merge after checks pass when:
