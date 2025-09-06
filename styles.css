@@ -110,3 +110,12 @@ body{
 .sidebar h2{ color: var(--accent-2); }
 
 .credit{ color: var(--muted); text-align:center; font-size:0.8rem; margin-bottom:1rem; }
+
+#testing-box{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background: blue;
+}
