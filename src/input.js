@@ -14,7 +14,7 @@ export function attachInput(game){
     window.dispatchEvent(ev)
   }
 
-  document.querySelectorAll('.controls .ctrl').forEach(btn => {
+  document.querySelectorAll('.controls button').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.getAttribute('data-key')
       triggerKey(key)

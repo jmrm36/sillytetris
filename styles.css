@@ -1,26 +1,35 @@
+:root{
+  --bg-0: #0d0b1f;
+  --bg-1: #161238;
+  --ghost-ink: #4b3f96;
+  --tile-glow: #b9a8ff;
+  --accent: #a68cff;
+  --accent-2: #ffd9fb;
+  --text: #f7f4ff;
+  --muted: #cfc7ff;
+  --danger: #ff5c8a;
+}
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-body {
-  background: #121212;
-  color: #fff;
-  font-family: 'Roboto', sans-serif;
+/* App background */
+body{
+  background:
+    radial-gradient(1200px 1200px at 80% -20%, #2a215d 0%, transparent 60%),
+    radial-gradient(1000px 1000px at -10% 100%, #2b154c 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1));
+  color: var(--text);
+  font-family: ui-rounded, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Color Emoji";
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-h1 {
-  margin: 20px 0;
-  font-size: 2rem;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-#game {
+#board {
   background: #1e1e1e;
   border: 2px solid #333;
   box-shadow: 0 0 20px rgba(0,0,0,0.6);
@@ -29,39 +38,61 @@ h1 {
   image-rendering: pixelated;
 }
 
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 30px;
+/* Board cells: cute ghost tile pattern */
+.cell{
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+  background:
+    url("assets/ghost.svg") center/85% no-repeat,
+    radial-gradient(180% 140% at 0% 0%, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border-radius: 6px;
+  transition: transform 60ms ease;
+}
+.cell.filled{
+  /* slight glow for active tiles */
+  filter: drop-shadow(0 0 6px var(--tile-glow));
 }
 
-.controls .ctrl {
-  background: linear-gradient(145deg, #2d2d2d, #1a1a1a);
-  border: none;
+/* Controls */
+.controls{
+  display:flex; gap:.75rem; justify-content:center; align-items:center; padding:12px 0; margin-bottom:30px;
+}
+.btn{
+  font: inherit;
+  border: 1px solid rgba(255,255,255,0.24);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  padding: .75rem 1rem;
   border-radius: 12px;
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-  transition: all 0.2s ease;
+  backdrop-filter: blur(6px);
+  transition: transform 120ms ease, background 120ms ease;
 }
+.btn:active{ transform: translateY(1px) scale(0.98); }
+.btn.primary{ background: linear-gradient(180deg, var(--accent), #7f6bff); border-color: transparent; color:#0d0630; font-weight:700; }
+.btn.ghost{ background: rgba(255,255,255,0.08); }
 
-.controls .ctrl:hover {
-  background: linear-gradient(145deg, #3a3a3a, #222);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+/* Overlay */
+.overlay{
+  position: fixed; inset: 0; display: grid; place-items: center;
+  background: linear-gradient(180deg, rgba(5,3,15,0.65), rgba(10,5,25,0.85));
+  opacity: 0; pointer-events: none; transition: opacity 200ms ease;
+  z-index: 999;
 }
+.overlay.visible{ opacity: 1; pointer-events: auto; }
+.overlay-card{
+  width: min(92vw, 420px);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px; padding: 28px; text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+.overlay-card h1{ margin: 10px 0 4px; letter-spacing: .5px; }
+.overlay-card p{ color: var(--muted); margin: 0 0 16px; }
+.ghost-hero{ width: 92px; height: 92px; display:block; margin:0 auto 8px; }
 
-.controls .ctrl:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
+/* Optional: sidebar headings */
+.sidebar h2{ color: var(--accent-2); }
 
-.controls svg {
-  width: 28px;
-  height: 28px;
-  fill: #00ffc3;
-}
+.credit{ color: var(--muted); text-align:center; font-size:0.8rem; margin-bottom:1rem; }
