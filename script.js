@@ -1,6 +1,5 @@
 import { Game } from './src/tetris.js';
 import { attachInput } from './src/input.js';
-import ghostSrc from './assets/ghost.svg';
 
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
@@ -8,7 +7,7 @@ const game = new Game(10, 20);
 attachInput(game);
 
 const ghostImg = new Image();
-ghostImg.src = ghostSrc;
+ghostImg.src = new URL('./assets/ghost.svg', import.meta.url).href;
 
 // --- Overlay wiring ---
 let gameStarted = true;
