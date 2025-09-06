@@ -41,25 +41,22 @@ showOverlay('Start');
 // --- Game loop ---
 let lastTime = 0;
 let rafId = null;
-let dropCounter = 0;
 const dropInterval = 500;
+let gravityId = null;
 
 function startGameLoop(){
   cancelAnimationFrame(rafId);
+  clearInterval(gravityId);
   lastTime = 0;
-  dropCounter = 0;
   rafId = requestAnimationFrame(update);
+  gravityId = setInterval(() => {
+    if (gameStarted) game.tick();
+  }, dropInterval);
 }
 
 function update(time = 0){
   if (!gameStarted) return; // guard
-  const delta = time - lastTime;
   lastTime = time;
-  dropCounter += delta;
-  if (dropCounter > dropInterval){
-    game.tick();
-    dropCounter = 0;
-  }
 
   ctx.clearRect(0,0,canvas.width,canvas.height);
   drawMatrix(game.arena, {x:0,y:0});
@@ -86,6 +83,7 @@ function drawMatrix(matrix, offset){
 
 function handleGameOver(){
   cancelAnimationFrame(rafId);
+  clearInterval(gravityId);
   gameStarted = false;
   showOverlay('Play again');
 }

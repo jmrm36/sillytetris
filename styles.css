@@ -62,7 +62,7 @@ body{
 /* Controls */
 .controls{
   display:flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap:.75rem;
   justify-content:center;
   align-items:center;
