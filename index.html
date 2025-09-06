@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>New Tetris</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="wrap">
@@ -12,6 +12,16 @@
       <canvas id="game" width="240" height="480"></canvas>
       <p class="hint">← → to move • ↑ rotate • ↓ soft drop • Space hard drop</p>
     </main>
-    <script type="module" src="/src/main.js"></script>
+
+    <!-- Mobile controls -->
+    <div id="touch" style="position:fixed;left:0;right:0;bottom:10px;display:flex;gap:10px;justify-content:center">
+      <button data-act="left">◀︎</button>
+      <button data-act="rotate">⟲</button>
+      <button data-act="drop">▼</button>
+      <button data-act="right">▶︎</button>
+      <button data-act="hard">⤓</button>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
   </body>
 </html>
