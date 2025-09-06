@@ -1,0 +1,73 @@
+name: Auto-merge PRs to main (no human review)
+
+on:
+  pull_request:
+    types: [opened, synchronize, labeled, ready_for_review]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+    steps:
+      - name: Check opt-in and target
+        id: gate
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const targetOK = pr.base.ref === 'main';
+            const author = (pr.user && pr.user.login || '').toLowerCase();
+            const labels = (pr.labels || []).map(l => l.name);
+            const opted = labels.includes('automerge') ||
+                          ['github-actions[bot]','codex[bot]'].includes(author);
+            core.setOutput('run', targetOK && opted ? 'true' : 'false');
+
+      - name: Exit if not opted in
+        if: steps.gate.outputs.run != 'true'
+        run: echo "Not opted in (needs label 'automerge' or bot author). Exiting." && exit 0
+
+  enable_auto_merge:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable auto-merge (squash)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const mutation = `
+              mutation($prId: ID!) {
+                enablePullRequestAutoMerge(input: {
+                  pullRequestId: $prId,
+                  mergeMethod: SQUASH
+                }) { clientMutationId }
+              }
+            `;
+            try {
+              await github.graphql(mutation, { prId: pr.node_id });
+              core.notice('Auto-merge enabled. It will merge when required checks pass.');
+            } catch (e) {
+              core.setFailed(
+                'Failed to enable auto-merge. Likely causes: (1) repo Auto-merge not enabled in settings, (2) branch protection requires reviews.'
+              );
+            }
+
+      - name: Comment status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: '✅ Auto-merge is enabled (Option A). This PR will merge automatically after checks pass.'
+            });
+

@@ -15,3 +15,17 @@
 
 ## Controls
 ← → move, ↑ rotate, ↓ soft drop, Space hard drop.
+
+## Auto-merge (Option A)
+PRs targeting `main` auto-merge after checks pass when:
+- They have the `automerge` label, or
+- They are opened by `github-actions[bot]`/`codex[bot]`.
+
+Requires:
+- Repo setting **Auto-merge** enabled in Settings.
+- Branch protection on `main` must **not** require reviews.
+
+How to use it now
+• On the PR you want merged automatically, add the label automerge (or make sure it’s opened by the bot).
+• That’s it—once CI passes, GitHub will merge it into main for you. If it doesn’t, the workflow comment will point to the likely setting that needs a quick toggle.
+
