@@ -29,6 +29,12 @@ body{
   align-items: center;
 }
 
+#game{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #board {
   background: #1e1e1e;
   border: 2px solid #333;
@@ -55,7 +61,15 @@ body{
 
 /* Controls */
 .controls{
-  display:flex; gap:.75rem; justify-content:center; align-items:center; padding:12px 0; margin-bottom:30px;
+  display:flex;
+  flex-wrap: wrap;
+  gap:.75rem;
+  justify-content:center;
+  align-items:center;
+  padding:12px 0;
+  margin-bottom:30px;
+  width:100%;
+  max-width:320px;
 }
 .btn{
   font: inherit;
