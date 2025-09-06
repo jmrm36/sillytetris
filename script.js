@@ -9,8 +9,8 @@ attachInput(game);
 const ghostImg = new Image();
 ghostImg.src = 'assets/ghost.svg';
 
-// --- Start gate / overlay wiring ---
-let gameStarted = false;
+// --- Overlay wiring ---
+let gameStarted = true;
 const overlay = document.getElementById('startScreen');
 const startBtn = document.getElementById('startBtn');
 
@@ -23,20 +23,15 @@ function hideOverlay(){
 }
 
 startBtn?.addEventListener('click', () => {
-  if (!gameStarted) {
-    gameStarted = true;
-    resetGame();
-    hideOverlay();
-    startGameLoop();
-  } else {
-    resetGame();
-    hideOverlay();
-    startGameLoop();
-  }
+  gameStarted = true;
+  resetGame();
+  hideOverlay();
+  startGameLoop();
 });
 
-// Call once on load to show start screen
-showOverlay('Start');
+// Hide start overlay and launch game immediately
+hideOverlay();
+startGameLoop();
 
 // --- Game loop ---
 let lastTime = 0;
@@ -52,24 +47,31 @@ function startGameLoop(){
 }
 
 function update(time = 0){
-  if (!gameStarted) return; // guard
-
   const deltaTime = time - lastTime;
   lastTime = time;
-  dropCounter += deltaTime;
-  if (dropCounter > dropInterval){
-    game.tick();
-    dropCounter = 0;
+
+  if (gameStarted){
+    dropCounter += deltaTime;
+    if (dropCounter > dropInterval){
+      game.tick();
+      dropCounter = 0;
+    }
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawMatrix(game.arena, {x:0,y:0});
+    if (game.active) drawMatrix(game.active.matrix, game.active.pos);
+
+    // Debug numbers for gravity
+    ctx.fillStyle = '#fff';
+    ctx.font = '12px monospace';
+    ctx.fillText(`y:${game.active ? game.active.pos.y : 0}`, 4, 12);
+    ctx.fillText(`drop:${dropCounter.toFixed(0)}`, 4, 24);
+
+    if (game.gameOver){
+      handleGameOver();
+    }
   }
 
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  drawMatrix(game.arena, {x:0,y:0});
-  if (game.active) drawMatrix(game.active.matrix, game.active.pos);
-
-  if (game.gameOver){
-    handleGameOver();
-    return;
-  }
   rafId = requestAnimationFrame(update);
 }
 
@@ -88,7 +90,6 @@ function drawMatrix(matrix, offset){
 }
 
 function handleGameOver(){
-  cancelAnimationFrame(rafId);
   gameStarted = false;
   showOverlay('Play again');
 }
