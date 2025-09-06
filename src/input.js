@@ -5,19 +5,19 @@ export function attachInput(game){
     if(e.key === 'ArrowRight') game.move(1)
     if(e.key === 'ArrowUp') game.rotate(1)
     if(e.key === 'ArrowDown') game.softDrop()
-    if(e.code === 'Space') game.hardDrop()
+    if(e.code === 'Space' || e.key === ' ') game.hardDrop()
   })
 
-  const touch = document.getElementById('touch')
-  if (touch){
-    touch.addEventListener('click', (e)=>{
-      const act = e.target?.dataset?.act
-      if(!act) return
-      if(act==='left') game.move(-1)
-      if(act==='right') game.move(1)
-      if(act==='rotate') game.rotate(1)
-      if(act==='drop') game.softDrop()
-      if(act==='hard') game.hardDrop()
-    })
+  function triggerKey(key) {
+    const ev = new KeyboardEvent('keydown', { key })
+    document.dispatchEvent(ev)
+    window.dispatchEvent(ev)
   }
+
+  document.querySelectorAll('.controls .ctrl').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-key')
+      triggerKey(key)
+    }, { passive: true })
+  })
 }

@@ -10,16 +10,14 @@
     <main class="wrap">
       <h1>New Tetris</h1>
       <canvas id="game" width="240" height="480"></canvas>
-      <p class="hint">← → to move • ↑ rotate • ↓ soft drop • Space hard drop</p>
     </main>
 
-    <!-- Mobile controls -->
-    <div id="touch" style="position:fixed;left:0;right:0;bottom:10px;display:flex;gap:10px;justify-content:center">
-      <button data-act="left">◀︎</button>
-      <button data-act="rotate">⟲</button>
-      <button data-act="drop">▼</button>
-      <button data-act="right">▶︎</button>
-      <button data-act="hard">⤓</button>
+    <div id="controls" class="controls" role="group" aria-label="Game controls">
+      <button id="btn-left"   class="ctrl" data-key="ArrowLeft"  aria-label="Move left">⬅️<span class="label">Left</span></button>
+      <button id="btn-rotate" class="ctrl" data-key="ArrowUp"    aria-label="Rotate">🔄<span class="label">Rotate</span></button>
+      <button id="btn-right"  class="ctrl" data-key="ArrowRight" aria-label="Move right">➡️<span class="label">Right</span></button>
+      <button id="btn-soft"   class="ctrl" data-key="ArrowDown"  aria-label="Soft drop">⬇️<span class="label">Soft</span></button>
+      <button id="btn-hard"   class="ctrl" data-key=" "          aria-label="Hard drop">⏬<span class="label">Hard</span></button>
     </div>
 
     <script type="module" src="src/main.js"></script>
