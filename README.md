@@ -14,7 +14,7 @@
 - Push to `main` and Pages will auto-publish to `gh-pages`.
 
 ## Controls
-← → move, ↑ rotate, ↓ soft drop, Space hard drop.
+Use the on-screen buttons to move left/right, rotate, soft drop, or hard drop. No keyboard is required.
 
 ## Auto-merge (Option A)
 PRs targeting `main` auto-merge after checks pass when:
