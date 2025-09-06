@@ -27,6 +27,7 @@ export class Game{
     this.cols=cols; this.rows=rows
     this.arena = [...Array(rows)].map(()=>Array(cols).fill(0))
     this.active = null
+    this.gameOver = false
     this.spawn()
   }
   randPiece(){
@@ -66,8 +67,7 @@ export class Game{
   spawn(){
     this.active = this.randPiece()
     if(this.collide(this.active.matrix, this.active.pos)){
-      alert("You lost!")
-      this.arena.forEach(r=>r.fill(0))
+      this.gameOver = true
     }
   }
   rotate(dir){
@@ -104,4 +104,10 @@ export class Game{
     this.softDrop()
   }
   tick(){ this.softDrop() }
+
+  reset(){
+    this.arena.forEach(r=>r.fill(0))
+    this.gameOver = false
+    this.spawn()
+  }
 }
